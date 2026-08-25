@@ -747,9 +747,9 @@
       <div class="sheet-num">SHEET 06</div>
     </div>
     <div class="contact-grid">
-      <a class="contact-card reveal" href="mailto:bei.zhou@mail.mcgill.ca">
+      <a class="contact-card reveal" id="emailCard" href="#">
         <div class="c-label">Email</div>
-        <div class="c-value">bei.zhou@mail.mcgill.ca</div>
+        <div class="c-value" id="emailValue">Loading…</div>
         <div class="c-arrow">Send a message →</div>
       </a>
       <a class="contact-card reveal" href="https://www.linkedin.com/in/beiqizhou/" target="_blank" rel="noopener">
@@ -781,6 +781,20 @@
 </footer>
 
 <script>
+  (function() {
+    // Built at runtime (not present as plain text in the HTML/JS source) so
+    // static scrapers that regex the page for email addresses don't find it.
+    const user = ['b','e','i','.','z','h','o','u'].join('');
+    const host = ['m','a','i','l','.','m','c','g','i','l','l','.','c','a'].join('');
+    const email = user + String.fromCharCode(64) + host;
+    const link = document.getElementById('emailCard');
+    const value = document.getElementById('emailValue');
+    if (link && value) {
+      link.href = 'mailto:' + email;
+      value.textContent = email;
+    }
+  })();
+
   const els = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
